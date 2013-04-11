@@ -7,8 +7,8 @@
 #
 
 # Load NVM into the shell session.
-if [[ -s "$HOME/.nvm/nvm.sh" ]]; then
-  source "$HOME/.nvm/nvm.sh"
+if [[ -s "$HOME/.env/vms/nvm/nvm.sh" ]]; then
+  source "$HOME/.env/vms/nvm/nvm.sh"
 fi
 
 # Return if requirements are not found.
