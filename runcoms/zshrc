@@ -28,10 +28,22 @@ path=(
   /usr/local/share/python
 )
 
+# Application aliases
 alias n=node
 alias r=ruby
 alias w=google-chrome
 alias v=vim
+
+local -a editableFileTypes
+editableFileTypes=(
+  'md'
+  'js'
+  'json'
+  'rb'
+  'php'
+  'zshrc'
+)
+for editable ($editableFileTypes); do alias -s $editable=$EDITOR; done
 
 # Can not remember what this one is useful at. jsctags seems perfectly fine without it...
 # export NODE_PATH=/usr/local/lib/jsctags/:$NODE_PATH
