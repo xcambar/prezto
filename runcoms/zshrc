@@ -16,6 +16,27 @@ fi
 # Customization by Xavier Cambar <xcambar@gmail.com> (For my own needs)
 #
 
+__myAliases=(
+  n node
+  r ruby
+  v vim
+)
+
+
+__suffixAliases=(
+  'md'
+  'js'
+  'json'
+  'rb'
+  'php'
+  'html'
+  'zshrc'
+  'vimrc'
+)
+
+
+
+
 # RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 source /Users/xav/.rvm/environments/default
@@ -29,21 +50,10 @@ path=(
 )
 
 # Application aliases
-alias n=node
-alias r=ruby
-alias w=google-chrome
-alias v=vim
-
-local -a editableFileTypes
-editableFileTypes=(
-  'md'
-  'js'
-  'json'
-  'rb'
-  'php'
-  'zshrc'
-)
-for editable ($editableFileTypes); do alias -s $editable=$EDITOR; done
+typeset -A __myAliases
+for al in ${(k)__myAliases}; do alias $al=$__myAliases[$al]; done
+# Suffix aliases
+for al ($__suffixAliases); do alias -s $al=$EDITOR; done
 
 # Can not remember what this one is useful at. jsctags seems perfectly fine without it...
 # export NODE_PATH=/usr/local/lib/jsctags/:$NODE_PATH
@@ -90,3 +100,4 @@ compdef _comp_npm npm-exec
 #source /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 bindkey -M viins '  ' vi-cmd-mode
 bindkey -M vicmd '  ' vi-insert
+bindkey '^R' history-incremental-search-backward
