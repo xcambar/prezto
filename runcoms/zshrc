@@ -35,14 +35,6 @@ __suffixAliases=(
 )
 
 
-
-
-# RVM
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-source /Users/xav/.rvm/environments/default
-
-
-
 #Python executables
 path=(
   $path
@@ -101,3 +93,7 @@ compdef _comp_npm npm-exec
 bindkey -M viins '  ' vi-cmd-mode
 bindkey -M vicmd '  ' vi-insert
 bindkey '^R' history-incremental-search-backward
+
+PATH="/Applications/Postgres.app/Contents/MacOS/bin:$PATH" #Postgres.app
+export RBENV_ROOT=/usr/local/var/rbenv
+eval "$(rbenv init -)"
