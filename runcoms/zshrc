@@ -87,8 +87,6 @@ function _comp_npm () {
 }
 compdef _comp_npm npm-exec
 
-alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
-
 # Powerline
 #source /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 bindkey -M viins '  ' vi-cmd-mode
