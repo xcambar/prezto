@@ -104,3 +104,7 @@ function less () {
   VIMPAGER=1 $PAGER $@
 }
 alias cat=$HOME/bin/vimpager/vimcat
+
+case $- in *i*)
+  if [ -z "$TMUX" ]; then exec tmux; fi;;
+esac
