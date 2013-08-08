@@ -71,7 +71,7 @@ compdef '_files -W "$HullCodePath/" -/' ch
 #
 # Auto completes the executables located in node_modules/.bin 
 #
-function npm-exec () {
+function npmbin () {
   PATH=$(npm bin):$PATH $@
 }
 function _comp_npm () {
@@ -85,7 +85,7 @@ function _comp_npm () {
       ;;
   esac
 }
-compdef _comp_npm npm-exec
+compdef _comp_npm npmbin
 
 # Powerline
 #source /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
