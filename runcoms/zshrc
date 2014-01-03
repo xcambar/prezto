@@ -16,6 +16,10 @@ fi
 # Customization by Xavier Cambar <xcambar@gmail.com> (For my own needs)
 #
 
+# Reclaim Ctrl-S and Ctrl-Q
+stty start undef
+stty stop undef
+
 __myAliases=(
   n node
   r ruby
@@ -89,8 +93,8 @@ compdef _comp_npm npmbin
 
 # Powerline
 #source /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
-bindkey -M viins '  ' vi-cmd-mode
-bindkey -M vicmd '  ' vi-insert
+bindkey -M viins 'ii' vi-cmd-mode
+bindkey -M vicmd 'ii' vi-insert
 bindkey '^R' history-incremental-search-backward
 
 PATH="/Applications/Postgres.app/Contents/MacOS/bin:$PATH" #Postgres.app
@@ -129,3 +133,5 @@ function __tmux-sessions() {
     _describe -t sessions 'sessions' sessions "$@"
 }
 compdef __tmux-sessions tm
+
+export SSL_CERT_FILE=/usr/local/opt/curl-ca-bundle/share/ca-bundle.crt
