@@ -4,7 +4,7 @@
 # Authors:
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
-
+alias tmux="TERM=screen-256color-bce tmux"
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
@@ -15,6 +15,7 @@ fi
 #
 # Customization by Xavier Cambar <xcambar@gmail.com> (For my own needs)
 #
+
 
 # Reclaim Ctrl-S and Ctrl-Q
 stty start undef
@@ -73,7 +74,7 @@ function ch () {
 compdef '_files -W "$HullCodePath/" -/' ch
 
 #
-# Auto completes the executables located in node_modules/.bin 
+# Auto completes the executables located in node_modules/.bin
 #
 function npmbin () {
   PATH=$(npm bin):$PATH $@
@@ -135,3 +136,9 @@ function __tmux-sessions() {
 compdef __tmux-sessions tm
 
 export SSL_CERT_FILE=/usr/local/opt/curl-ca-bundle/share/ca-bundle.crt
+
+
+# Help (tips from Homebrew install)
+unalias run-help
+autoload run-help
+HELPDIR=/usr/local/share/zsh/helpfiles
