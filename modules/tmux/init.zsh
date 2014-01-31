@@ -37,7 +37,9 @@ if [[ -z "$TMUX" ]] && ( \
 
     # Enable the destruction of unattached sessions globally to prevent
     # an abundance of open, detached sessions.
-    tmux set-option -g destroy-unattached on &> /dev/null
+    if zstyle -t ':prezto:module:tmux' destroy-unattached ; then
+      tmux set-option -g destroy-unattached on &> /dev/null
+    fi
   fi
 
   exec tmux new-session -t "$tmux_session"
