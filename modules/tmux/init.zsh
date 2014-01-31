@@ -5,6 +5,7 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #   Colin Hebert <hebert.colin@gmail.com>
 #   Georges Discry <georges@discry.be>
+#   Xavier Cambar <xcambar@gmail.com>
 #
 
 # Return if requirements are not found.
@@ -22,27 +23,19 @@ if [[ -z "$TMUX" ]] && ( \
 ); then
   tmux_session='#Prezto'
 
+  # Create the default '#Prezto' session if not available. 
   if ! tmux has-session -t "$tmux_session" 2> /dev/null; then
-    # Ensure that tmux server is started.
-    tmux start-server
-
-    # Disable the destruction of unattached sessions globally.
-    tmux set-option -g destroy-unattached off &> /dev/null
-
-    # Create a new session.
-    tmux new-session -d -s "$tmux_session"
-
-    # Disable the destruction of the new, unattached session.
-    tmux set-option -t "$tmux_session" destroy-unattached off &> /dev/null
-
-    # Enable the destruction of unattached sessions globally to prevent
-    # an abundance of open, detached sessions.
-    if zstyle -t ':prezto:module:tmux' destroy-unattached ; then
-      tmux set-option -g destroy-unattached on &> /dev/null
-    fi
+    tmux start-server \; new-session -d -s "$tmux_session" \; set-option -t "$tmux_session" destroy-unattached off &> /dev/null
   fi
 
-  exec tmux new-session -t "$tmux_session"
+  #By default, prezto sets destroy-unattached to on
+  tmux_destroy_unattached=`tmux show-options -v -g destroy-unattached`
+  if [[ -z "$tmux_destroy_unattached" ]]; then
+    tmux set-option -g destroy-unattached on
+  fi
+
+  #Opens the session '#Prezto' or the latest session used
+  exec tmux attach-session
 fi
 
 #
