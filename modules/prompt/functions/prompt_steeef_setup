@@ -11,13 +11,17 @@
 # Screenshots:
 #   http://i.imgur.com/HyRvv.png
 #
+prompt_width () {
+  echo $(( ${#${(S%%)1//(\%([KF1]|)\{*\}|\%[Bbkf])}} ))
+}
+local COLUMNS=$(tput cols)
 
 function prompt_steeef_precmd {
   # Check for untracked files or updated submodules since vcs_info does not.
   if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
-    branch_format="|${_prompt_steeef_colors[1]}%b%f|%u%c${_prompt_steeef_colors[4]} untracked%f"
+    branch_format="${_prompt_steeef_colors[1]}(%b)%f%u%c${_prompt_steeef_colors[4]} untracked%f"
   else
-    branch_format="|${_prompt_steeef_colors[1]}%b%f|%u%c"
+    branch_format="${_prompt_steeef_colors[1]}(%b)%f%u%c"
   fi
 
   zstyle ':vcs_info:*:prompt:*' formats "${branch_format}"
@@ -27,9 +31,23 @@ function prompt_steeef_precmd {
   if (( $+functions[python-info] )); then
     python-info
   fi
+  # Define prompts.
+  # local tmux_available=''
+  # [[ -z $TMUX ]] && tmux_available="${_prompt_steeef_colors[6]}◢!◣ %f"
+  local line1_left="%F{white}-- %f${tmux_available}${_prompt_steeef_colors[3]}%n%f in ${_prompt_steeef_colors[5]}%~%f "
+  local line1_right=" ${vcs_info_msg_0_} %F{white}--%f"
+  local line1_left_width="$(prompt_width $line1_left)"
+  local line1_right_width=$(prompt_width $line1_right)
+  local filler="%{%F{white}%}${(l:$(( $COLUMNS - ( 1 + $line1_left_width + $line1_right_width ) ))::—:)}%{$reset_color%}"
+  local line2_left="$python_info[virtualenv]ツ "
+
+  PROMPT="
+$line1_left$filler$line1_right
+$line2_left"
 }
 
 function prompt_steeef_setup {
+
   setopt LOCAL_OPTIONS
   unsetopt XTRACE KSH_ARRAYS
   prompt_opts=(cr percent subst)
@@ -40,6 +58,7 @@ function prompt_steeef_setup {
 
   # Add hook for calling vcs_info before each command.
   add-zsh-hook precmd prompt_steeef_precmd
+  # add-zsh-hook precmd prompt_steeef_line
 
   # Use extended color pallete if available.
   if [[ $TERM = *256color* || $TERM = *rxvt* ]]; then
@@ -72,8 +91,6 @@ function prompt_steeef_setup {
   local action_format="(${_prompt_steeef_colors[5]}%a%f)"
   local unstaged_format="${_prompt_steeef_colors[2]} unstaged%f" # Used to be this char ●
   local staged_format="${_prompt_steeef_colors[5]} staged%f"
-  local tmux_available=''
-  [[ -z $TMUX ]] && tmux_available="${_prompt_steeef_colors[6]}◢!◣ %f"
 
   # Set vcs_info parameters.
   zstyle ':vcs_info:*' enable bzr git hg svn
@@ -82,20 +99,12 @@ function prompt_steeef_setup {
   zstyle ':vcs_info:*:prompt:*' stagedstr "${staged_format}"
   zstyle ':vcs_info:*:prompt:*' actionformats "${branch_format}${action_format}"
   zstyle ':vcs_info:*:prompt:*' formats "${branch_format}"
-  zstyle ':vcs_info:*:prompt:*' nvcsformats   "${_prompt_steeef_colors[2]}(╯°∿°)╯︵ ┻━┻%f"
+  # TODO For when I know how to fix double-sidth chars: (╯°∿°)╯︵ ┻━┻
+  zstyle ':vcs_info:*:prompt:*' nvcsformats   "${_prompt_steeef_colors[2]}(╯°∿°)╯ ┻━┻%f"
 
   # Set python-info parameters.
   zstyle ':prezto:module:python:info:virtualenv' format '(%v)'
 
-  # Define prompts.
-  PROMPT="
-${tmux_available}${_prompt_steeef_colors[3]}%n%f in ${_prompt_steeef_colors[5]}%~%f 
-"'$python_info[virtualenv]'"ツ "
-#   PROMPT="
-# ${_prompt_steeef_colors[3]}%n%f at ${_prompt_steeef_colors[2]}%m%f in ${_prompt_steeef_colors[5]}%~%f "'${vcs_info_msg_0_}'"
-# "'$python_info[virtualenv]'"$ "
-  RPROMPT='${vcs_info_msg_0_}'
 }
 
 prompt_steeef_setup "$@"
-
