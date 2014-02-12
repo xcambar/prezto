@@ -23,14 +23,14 @@ function prompt_xcambar_precmd {
   fi
 
   local no_git=" %F{166}(╯°∿°)╯ ┻━┻%f"
-  local _prompt_left="%F{white}–– %f%F{135}%n%f in %F{118}%~%f "
-  local _prompt_right="${git_info[prompt]:-${no_git}} %F{white}––%f"
+  local _prompt_left="%F{240}${(l:2::·:)} %f%F{135}%n%f in %F{118}%~%f "
+  local _prompt_right="${git_info[prompt]:-${no_git}} %F{240}${(l:2::·:)}%f"
 
   local line1_left_width=$(prompt_width $_prompt_left)
   local line1_right_width=$(prompt_width $_prompt_right)
   local screen_width=$(tput cols)
   local filler_width=(( $screen_width - $line1_left_width - $line1_right_width - 1))
-  local _prompt_filler="%{%F{white}%}${(l:$filler_width::—:)}%{$reset_color%}"
+  local _prompt_filler="%{%F{240}%}${(l:$filler_width::·:)}%{$reset_color%}"
 
   PROMPT="
 ${_prompt_left}${_prompt_filler}${_prompt_right}    ツ "
@@ -56,7 +56,7 @@ function prompt_xcambar_setup {
   zstyle ':prezto:module:git:info:keys' format \
     'prompt' '%b%u%i%I'
 
-  zstyle ':prezto:module:editor:info:keymap:alternate' format "%B%F{red}◀■■■%f%b"
+  zstyle ':prezto:module:editor:info:keymap:alternate' format "%B%F{160}◀■■■%f%b"
 
   # function TRAPINT() {
   #   return $(( 128 + $1 ))
