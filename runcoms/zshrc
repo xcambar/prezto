@@ -98,10 +98,6 @@ bindkey -M viins 'ii' vi-cmd-mode
 bindkey -M vicmd 'ii' vi-insert
 bindkey '^R' history-incremental-search-backward
 
-PATH="/Applications/Postgres.app/Contents/MacOS/bin:$PATH" #Postgres.app
-export RBENV_ROOT=/usr/local/var/rbenv
-eval "$(rbenv init -)"
-
 
 # vimpager
 PAGER=$HOME/bin/vimpager/vimpager

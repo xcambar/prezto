@@ -43,9 +43,14 @@ typeset -gU cdpath fpath mailpath path
 
 # Set the list of directories that Zsh searches for programs.
 path=(
+  /Applications/Postgres.app/Contents/MacOS/bin
   /usr/local/{bin,sbin}
   $path
 )
+
+export RBENV_ROOT=/usr/local/var/rbenv
+eval "$(rbenv init -)"
+
 
 #
 # Less
