@@ -81,7 +81,9 @@ if [[ ! -d "$TMPPREFIX" ]]; then
 fi
 
 # Base16 Shell
-BASE16_SCHEME="eighties"
+BASE16_SCHEME="ocean"
 BASE16_SHELL="$HOME/.config/base16-shell/base16-$BASE16_SCHEME.dark.sh"
 [[ -s $BASE16_SHELL ]] && . $BASE16_SHELL
 
+# Useful for Karma, as Chrome is installed via Cask
+export CHROME_BIN=CHROME_BIN=~/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
