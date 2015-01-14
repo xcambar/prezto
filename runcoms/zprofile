@@ -43,7 +43,7 @@ typeset -gU cdpath fpath mailpath path
 
 # Set the list of directories that Zsh searches for programs.
 path=(
-  /Applications/Postgres.app/Contents/MacOS/bin
+  /Applications/Postgres.app/Contents/Versions/9.3/bin
   /usr/local/{bin,sbin}
   $path
 )
@@ -91,3 +91,26 @@ export PIP_VIRTUALENV_BASE=$WORKON_HOME
 
 # Useful for Karma, as Chrome is installed via Cask
 export CHROME_BIN=CHROME_BIN=~/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
+
+#boot2docker
+export DOCKER_HOST=tcp://192.168.59.103:2376
+export DOCKER_CERT_PATH=/Users/xav/.boot2docker/certs/boot2docker-vm
+export DOCKER_TLS_VERIFY=1
+export CURL_CA_BUNDLE=/usr/local/etc/openssl/certs/cacert.pem
+
+#fig, figfiles
+alias fig="REQUESTS_CA_BUNDLE=~/.boot2docker/certs/boot2docker-vm/ca.pem fig"
+alias figfiles="REQUESTS_CA_BUNDLE=~/.boot2docker/certs/boot2docker-vm/ca.pem figfiles"
+
+#erlang
+MANPATH=/usr/local/opt/erlang/lib/erlang/man:$MANPATH
+
+#old-school cat
+alias bcat=/bin/cat
+
+#weechat
+alias weechat="TERM=screen-256color weechat"
+
+#Novapost
+alias npmeb="boot2docker up && workon fig && DOCKER_HOST=https://boot2docker:2376 figfiles up --reuseyml novapostme"
+alias npmef="docker run --rm -v ~/code/novapost/front/novapostMe:/home/nova/src/novapostmejs -v ~/.figtmp/nginx/conf.d:/etc/nginx/conf.d --link novapost_insight_1:insight.local --link novapost_novapostme_1:novapostme.local -p 80:80 nginx"
